@@ -1,0 +1,29 @@
+<ion-card class="flash-card">
+  <div class="badge-container">
+    <ion-badge color="danger">ENDS IN 2H</ion-badge>
+  </div>
+
+  <div class="image-container">
+    <img src="https://placehold.co/600x400/purple/white?text=Gaming+Headset" />
+  </div>
+
+  <ion-card-header>
+    <div class="price-row">
+      <ion-card-subtitle class="old-price">$120.00</ion-card-subtitle>
+      <ion-card-title class="new-price">$59.99</ion-card-title>
+    </div>
+    <ion-card-title class="product-name">Sony WH-1000XM5</ion-card-title>
+  </ion-card-header>
+
+  <div class="action-row">
+    <ion-button
+      fill="outline"
+      shape="round"
+      expand="block"
+      (click)="toggleNotify()"
+    >
+      <ion-icon slot="start" name="notifications-outline"></ion-icon>
+      Get Alert
+    </ion-button>
+  </div>
+</ion-card>
