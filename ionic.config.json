@@ -1,0 +1,7 @@
+{
+  "name": "ShopFlash",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
