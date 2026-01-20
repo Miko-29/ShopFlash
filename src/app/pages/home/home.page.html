@@ -1,29 +1,45 @@
-<ion-card class="flash-card">
-  <div class="badge-container">
-    <ion-badge color="danger">ENDS IN 2H</ion-badge>
-  </div>
+<ion-header [translucent]="true" class="ion-no-border">
+  <ion-toolbar>
+    <ion-title>ShopFlash ⚡</ion-title>
+    <ion-buttons slot="end">
+      <ion-button routerLink="/settings">
+        <ion-icon slot="icon-only" name="settings-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
 
-  <div class="image-container">
-    <img src="https://placehold.co/600x400/purple/white?text=Gaming+Headset" />
-  </div>
+<ion-content [fullscreen]="true" class="ion-padding-top">
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12" size-md="6" *ngFor="let p of products">
+        <ion-card class="flash-card" [routerLink]="['/product', p.id]">
+          <div class="image-container">
+            <ion-badge color="danger" class="flash-badge">
+              Ends in {{ p.endsIn }}
+            </ion-badge>
+            <img [src]="p.imageUrl" [alt]="p.name" />
+          </div>
 
-  <ion-card-header>
-    <div class="price-row">
-      <ion-card-subtitle class="old-price">$120.00</ion-card-subtitle>
-      <ion-card-title class="new-price">$59.99</ion-card-title>
-    </div>
-    <ion-card-title class="product-name">Sony WH-1000XM5</ion-card-title>
-  </ion-card-header>
+          <ion-card-content>
+            <h2>{{ p.name }}</h2>
+            <div class="price-container">
+              <span class="old-price">${{ p.originalPrice }}</span>
+              <span class="new-price">${{ p.price }}</span>
+            </div>
 
-  <div class="action-row">
-    <ion-button
-      fill="outline"
-      shape="round"
-      expand="block"
-      (click)="toggleNotify()"
-    >
-      <ion-icon slot="start" name="notifications-outline"></ion-icon>
-      Get Alert
-    </ion-button>
-  </div>
-</ion-card>
+            <ion-button
+              expand="block"
+              fill="outline"
+              color="dark"
+              class="ion-margin-top"
+            >
+              <ion-icon name="notifications-outline" slot="start"></ion-icon>
+              Notify Me
+            </ion-button>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

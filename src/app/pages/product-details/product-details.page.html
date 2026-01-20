@@ -1,13 +1,33 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>product-details</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ product?.name || 'Loading...' }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">product-details</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding" *ngIf="product">
+  <div class="detail-image">
+    <img [src]="product.imageUrl" />
+  </div>
+
+  <h1 class="ion-margin-top">{{ product.name }}</h1>
+
+  <div class="price-wrapper">
+    <h2 class="price text-danger">${{ product.price }}</h2>
+    <span class="old-price">was ${{ product.originalPrice }}</span>
+  </div>
+
+  <p class="description">
+    Flash Sale ends in <strong>{{ product.endsIn }}</strong>! Grab this limited
+    time offer before stock runs out.
+  </p>
 </ion-content>
+
+<ion-footer class="ion-no-border ion-padding">
+  <ion-button expand="block" size="large" color="primary">
+    <ion-icon slot="start" name="cart-outline"></ion-icon>
+    Buy Now
+  </ion-button>
+</ion-footer>

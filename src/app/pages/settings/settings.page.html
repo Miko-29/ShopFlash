@@ -1,0 +1,34 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Notification Prefs</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list lines="full">
+    <ion-list-header>
+      <ion-label>Flash Categories</ion-label>
+    </ion-list-header>
+
+    <ion-item>
+      <ion-label>Electronics Alerts</ion-label>
+      <ion-toggle
+        [(ngModel)]="subs.electronics"
+        (ionChange)="toggleTopic('electronics', $event)"
+      >
+      </ion-toggle>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Fashion Alerts</ion-label>
+      <ion-toggle
+        [(ngModel)]="subs.fashion"
+        (ionChange)="toggleTopic('fashion', $event)"
+      >
+      </ion-toggle>
+    </ion-item>
+  </ion-list>
+</ion-content>

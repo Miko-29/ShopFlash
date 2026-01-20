@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import {
   IonContent,
   IonHeader,
@@ -13,7 +12,16 @@ import {
   IonCardTitle,
   IonBadge,
   IonIcon,
+  IonCardContent,
+  IonButtons,
+  IonCol,
+  IonRow,
+  IonGrid,
 } from '@ionic/angular/standalone';
+import { RouterLink } from '@angular/router';
+import { addIcons } from 'ionicons';
+import { settingsOutline, notificationsOutline } from 'ionicons/icons';
+import { ProductService, Product } from '../../services/product';
 
 @Component({
   selector: 'app-home',
@@ -21,11 +29,13 @@ import {
   styleUrls: ['./home.page.scss'],
   standalone: true,
   imports: [
+    IonGrid,
+    IonRow,
+    IonCol,
+    IonButtons,
+    IonCardContent,
     IonIcon,
     IonBadge,
-    IonCardTitle,
-    IonCardSubtitle,
-    IonCardHeader,
     IonButton,
     IonCard,
     IonContent,
@@ -33,14 +43,17 @@ import {
     IonTitle,
     IonToolbar,
     CommonModule,
-    FormsModule,
+    RouterLink,
   ],
 })
 export class HomePage implements OnInit {
-  toggleNotify() {
-    throw new Error('Method not implemented.');
-  }
-  constructor() {}
+  products: Product[] = [];
 
-  ngOnInit() {}
+  constructor(private productService: ProductService) {
+    addIcons({ settingsOutline, notificationsOutline });
+  }
+
+  ngOnInit() {
+    this.products = this.productService.getProducts();
+  }
 }

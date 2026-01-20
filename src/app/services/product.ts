@@ -4,9 +4,10 @@ export interface Product {
   id: string;
   name: string;
   category: 'electronics' | 'fashion';
+  imageUrl: string;
   price: number;
-  image: string;
-  description: string;
+  originalPrice: number;
+  endsIn: string; // e.g., "2h 15m"
 }
 
 @Injectable({
@@ -15,36 +16,50 @@ export interface Product {
 export class ProductService {
   private products: Product[] = [
     {
-      id: '101',
-      name: 'Noise Cancelling Headphones',
+      id: 'prod_101',
+      name: 'Sony WH-1000XM5',
       category: 'electronics',
+      imageUrl: 'https://placehold.co/600x400/222/FFF?text=Sony+Headphones',
       price: 299,
-      image: 'https://placehold.co/150x150/333/fff?text=Headphones', // Placeholder image
-      description: 'Best in class sound quality.',
+      originalPrice: 399,
+      endsIn: '2h 10m',
     },
     {
-      id: '102',
-      name: 'Limited Edition Sneakers',
+      id: 'prod_102',
+      name: 'Nike Air Zoom',
       category: 'fashion',
-      price: 120,
-      image: 'https://placehold.co/150x150/orange/white?text=Sneakers',
-      description: 'Comfort meets style.',
+      imageUrl: 'https://placehold.co/600x400/e63946/FFF?text=Nike+Air',
+      price: 89,
+      originalPrice: 129,
+      endsIn: '45m',
     },
     {
-      id: '103',
-      name: 'Smart Watch Series 7',
+      id: 'prod_103',
+      name: 'Samsung Galaxy Watch 6',
       category: 'electronics',
-      price: 399,
-      image: 'https://placehold.co/150x150/blue/white?text=Watch',
-      description: 'Track your fitness goals.',
+      imageUrl: 'https://placehold.co/600x400/111/FFF?text=Galaxy+Watch',
+      price: 199,
+      originalPrice: 249,
+      endsIn: '5h 00m',
+    },
+    {
+      id: 'prod_104',
+      name: 'Denim Jacket Vintage',
+      category: 'fashion',
+      imageUrl: 'https://placehold.co/600x400/457b9d/FFF?text=Denim+Jacket',
+      price: 59,
+      originalPrice: 99,
+      endsIn: '1h 30m',
     },
   ];
 
-  getProducts() {
+  constructor() {}
+
+  getProducts(): Product[] {
     return this.products;
   }
 
-  getProductById(id: string) {
+  getProductById(id: string): Product | undefined {
     return this.products.find((p) => p.id === id);
   }
 }
