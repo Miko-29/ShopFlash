@@ -1,9 +1,9 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'io.ionic.starter',
+  appId: 'com.shopflash.app',
   appName: 'ShopFlash',
-  webDir: 'www'
+  webDir: 'www',
 };
 
 export default config;
