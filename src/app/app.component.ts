@@ -1,55 +1,77 @@
-import { Component, NgZone } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core'; // Import inject
 import { Router } from '@angular/router';
 import { IonApp, IonRouterOutlet, Platform } from '@ionic/angular/standalone';
-import { Capacitor } from '@capacitor/core';
 import {
   PushNotifications,
   ActionPerformed,
 } from '@capacitor/push-notifications';
+import { Capacitor } from '@capacitor/core';
+import { Device } from '@capacitor/device';
+import { Firestore, doc, setDoc } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
+  standalone: true,
   imports: [IonApp, IonRouterOutlet],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+  private firestore: Firestore = inject(Firestore);
+
   constructor(
     private platform: Platform,
     private router: Router,
-    private ngZone: NgZone,
   ) {}
 
   ngOnInit() {
-    // Only initialize Push if on a native device (iOS/Android)
     if (Capacitor.isNativePlatform()) {
       this.initPushNotifications();
     }
   }
 
-  private async initPushNotifications() {
+  async initPushNotifications() {
     const result = await PushNotifications.requestPermissions();
-
     if (result.receive === 'granted') {
       await PushNotifications.register();
     }
 
-    PushNotifications.addListener('registration', (token) => {
+    PushNotifications.addListener('registration', async (token) => {
       console.log('PUSH TOKEN:', token.value);
-      // TODO: Send this token to your backend
+
+      await this.saveTokenToFirestore(token.value);
     });
 
     PushNotifications.addListener(
       'pushNotificationActionPerformed',
       (notification: ActionPerformed) => {
         const data = notification.notification.data;
-        console.log('Push Action Data:', data);
-
         if (data && data.productId) {
-          this.ngZone.run(() =>
-            this.router.navigate(['/product', data.productId]),
-          );
+          this.router.navigate(['/product', data.productId]);
         }
       },
     );
+  }
+
+  async saveTokenToFirestore(token: string) {
+    try {
+      const deviceId = await Device.getId();
+      const uniqueId = deviceId.identifier;
+
+      const userRef = doc(this.firestore, 'users', uniqueId);
+
+      await setDoc(
+        userRef,
+        {
+          pushToken: token,
+          updatedAt: new Date().toISOString(),
+          platform: Capacitor.getPlatform(),
+        },
+        { merge: true },
+      );
+
+      console.log('Token saved to Firestore for user:', uniqueId);
+    } catch (e) {
+      console.error('Error saving token:', e);
+    }
   }
 }

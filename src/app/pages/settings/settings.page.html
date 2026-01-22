@@ -16,6 +16,7 @@
     <ion-item>
       <ion-label>Electronics Alerts</ion-label>
       <ion-toggle
+        slot="end"
         [(ngModel)]="subs.electronics"
         (ionChange)="toggleTopic('electronics', $event)"
       >
@@ -25,6 +26,7 @@
     <ion-item>
       <ion-label>Fashion Alerts</ion-label>
       <ion-toggle
+        slot="end"
         [(ngModel)]="subs.fashion"
         (ionChange)="toggleTopic('fashion', $event)"
       >

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "533932131229",
+    "project_id": "shopflash-d055a",
+    "storage_bucket": "shopflash-d055a.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:533932131229:android:3ccdb63e3f6ad1b6b66574",
+        "android_client_info": {
+          "package_name": "com.shopflash.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAQ0dHug06dqIQJn8pQZw_aSIlNAeIHCwI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
