@@ -18,11 +18,11 @@
             <ion-badge color="danger" class="flash-badge">
               Ends in {{ p.endsIn }}
             </ion-badge>
-            <img [src]="p.imageUrl" [alt]="p.name" />
+            <img [src]="p.images[0]" [alt]="p.title" />
           </div>
 
           <ion-card-content>
-            <h2>{{ p.name }}</h2>
+            <h2>{{ p.title }}</h2>
             <div class="price-container">
               <span class="old-price">${{ p.originalPrice }}</span>
               <span class="new-price">${{ p.price }}</span>

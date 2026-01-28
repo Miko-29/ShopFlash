@@ -3,16 +3,16 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/home"></ion-back-button>
     </ion-buttons>
-    <ion-title>{{ product?.name || 'Loading...' }}</ion-title>
+    <ion-title>{{ product?.title || 'Loading...' }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding" *ngIf="product">
   <div class="detail-image">
-    <img [src]="product.imageUrl" />
+    <img [src]="product.images[0]" />
   </div>
 
-  <h1 class="ion-margin-top">{{ product.name }}</h1>
+  <h1 class="ion-margin-top">{{ product.title }}</h1>
 
   <div class="price-wrapper">
     <h2 class="price text-danger">${{ product.price }}</h2>

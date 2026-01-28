@@ -1,65 +1,56 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable, map, tap } from 'rxjs';
 
 export interface Product {
-  id: string;
-  name: string;
-  category: 'electronics' | 'fashion';
-  imageUrl: string;
+  id: number;
+  title: string;
   price: number;
-  originalPrice: number;
-  endsIn: string; // e.g., "2h 15m"
+  category: {
+    id: number;
+    name: string;
+    image: string;
+  };
+  description: string;
+  images: string[];
+  originalPrice?: number;
+  endsIn?: string;
 }
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductService {
-  private products: Product[] = [
-    {
-      id: 'prod_101',
-      name: 'Sony WH-1000XM5',
-      category: 'electronics',
-      imageUrl: 'https://placehold.co/600x400/222/FFF?text=Sony+Headphones',
-      price: 299,
-      originalPrice: 399,
-      endsIn: '2h 10m',
-    },
-    {
-      id: 'prod_102',
-      name: 'Nike Air Zoom',
-      category: 'fashion',
-      imageUrl: 'https://placehold.co/600x400/e63946/FFF?text=Nike+Air',
-      price: 89,
-      originalPrice: 129,
-      endsIn: '45m',
-    },
-    {
-      id: 'prod_103',
-      name: 'Samsung Galaxy Watch 6',
-      category: 'electronics',
-      imageUrl: 'https://placehold.co/600x400/111/FFF?text=Galaxy+Watch',
-      price: 199,
-      originalPrice: 249,
-      endsIn: '5h 00m',
-    },
-    {
-      id: 'prod_104',
-      name: 'Denim Jacket Vintage',
-      category: 'fashion',
-      imageUrl: 'https://placehold.co/600x400/457b9d/FFF?text=Denim+Jacket',
-      price: 59,
-      originalPrice: 99,
-      endsIn: '1h 30m',
-    },
-  ];
+  private http = inject(HttpClient);
+  private apiUrl = 'https://api.escuelajs.co/api/v1/products';
 
-  constructor() {}
+  products: Product[] = [];
 
-  getProducts(): Product[] {
-    return this.products;
+  getProducts(): Observable<Product[]> {
+    return this.http.get<Product[]>(this.apiUrl).pipe(
+      map((products) =>
+        products.map((p) => {
+          const markup = 1 + Math.random() * 0.5;
+          const fakeOriginal = p.price * markup;
+
+          return {
+            ...p,
+            originalPrice: parseInt(fakeOriginal.toFixed(0)),
+            endsIn: this.getRandomTime(),
+          };
+        }),
+      ),
+      tap((data) => (this.products = data)),
+    );
   }
 
   getProductById(id: string): Product | undefined {
-    return this.products.find((p) => p.id === id);
+    return this.products.find((product) => product.id === Number(id));
+  }
+
+  private getRandomTime() {
+    const hours = Math.floor(Math.random() * 12) + 1;
+    const mins = Math.floor(Math.random() * 60);
+    return `${hours}h ${mins}m`;
   }
 }
