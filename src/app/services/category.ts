@@ -46,13 +46,12 @@ export class CategoryService {
   getCategoryById(id: string): Observable<Category> {
     return this.http.get<Category>(`${this.apiUrl}/${id}`).pipe(
       map((p) => {
-        // We need to regenerate it here since the API doesn't save our fake data
-        const markup = 1.3;
+        const markup = 1 + Math.random() * 0.5;
         const fakeOriginal = p.price * markup;
 
         return {
           ...p,
-          originalPrice: parseFloat(fakeOriginal.toFixed(2)),
+          originalPrice: parseFloat(fakeOriginal.toFixed(0)),
           endsIn: '2h 00m',
         };
       }),
